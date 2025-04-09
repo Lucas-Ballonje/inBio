@@ -1,3 +1,6 @@
+import Button from "../ui/butto";
+import TextInput from "../ui/text-input";
+
 export default function Hero(){
     return(
         <div className="flex border">
@@ -7,10 +10,10 @@ export default function Hero(){
                     Crie sua própria página de links personalizada e compartilhe com o mundo.<br/>
                     Acompanhe o engajamento com Analytics de clicks e leads.
                 </h2>
-                <div className="flex items-center gap-2 w-full -mt-[10vh]">
+                <div className="flex items-center gap-2 w-full mt-[10vh]">
                     <span className="text-white text-xl">projectinbio.com/</span>
-                    <input type="text" />
-                    <button>Criar Agora</button>
+                    <TextInput placeholder="Seu link" />
+                    <Button>Criar Agora</Button>
                 </div>
             </div>
             <div className="w-full flex items-center justigy-center bg-[radial-gradient(circle_at_50%_50%,#482DBB, transparent_55%)]">
