@@ -1,8 +1,11 @@
 import ProjectCard from "@/app/commons/project-card";
 import { TotalVisits } from "@/app/commons/total-visits";
 import UserCard from "@/app/commons/use-card";
-import { Plus } from "lucide-react";
+import { getProfileData } from "@/app/server/get-profile-data";
+import { auth } from "@/app/lib/auth";
 import Link from "next/link";
+import { notFound } from "next/navigation";
+import NewProject from "./new-project";
 
 export default async function ProfilePage({
   params,
@@ -11,10 +14,18 @@ export default async function ProfilePage({
 }) {
   const { profileid } = await params;
 
+  const profileData = await getProfileData(profileid);
+  if (!profileData) return notFound();
+
+  // Aqui você precisa usar await
+  const session = await auth();
+
+  const isOwner = profileData.userId === session?.user?.id;
+
   return (
     <div className="relative h-screen flex p-20 overflow-hidden">
       <div className="fixed top-0 left-0 w-full flex justify-center items-center gap-1 py-2 bg-background-tertiary">
-        <span>Você esta usando a versão trial</span>
+        <span>Você está usando a versão trial</span>
         <Link href={`/${profileid}/upgrade`}>
           <button className="text-accent-green font-bold">
             Faça o upgrade agora
@@ -28,10 +39,7 @@ export default async function ProfilePage({
         <ProjectCard />
         <ProjectCard />
         <ProjectCard />
-        <button className="w-[340px] h-[132px] rounded-[20px] bg-background-secondary flex items-center gap-2 justify-center hover:border border-dashed border-background-secondary">
-          <Plus className="size-10" />
-          <span className="text-accent-green">Criar novo projeto</span>
-        </button>
+        {isOwner && <NewProject profileid={profileid} />}
       </div>
       <div className="absolute bottom-4 right-0 left-0 w-min mx-auto">
         <TotalVisits />

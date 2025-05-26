@@ -10,7 +10,7 @@ export default function TextArea(
       className={cn(
         `
             w-full bg-background-secondary text-white placeholder:text-content-placheholder rounded-xl 
-            border-transparent hover:border-border-secondary hover:text-content-body active:border-border-tertiary`,
+            border-transparent hover:border-border-secondary hover:text-content-body active:border-border-tertiary resize-none`,
         props.className
       )}
     />
